@@ -1,0 +1,57 @@
+#########################
+#        SCHEMA         #
+#########################
+schema {
+    query: Query
+    mutation: Mutation
+}
+#########################
+#        QUERIES        #
+#########################
+
+type Query {
+    """
+    Liefert eine bestimmte Zahlung anhand ihrer ID zurück.
+    Nur für Benutzer mit Rolle ADMIN, USER, SUPREME, ELITE oder BASIC.
+    """
+    payment(id: ID!): Payment!
+
+    """
+    Liefert eine Liste aller Zahlungen (optional gefiltert).
+    Nur für Benutzer mit Rolle ADMIN oder USER.
+    """
+    payments(input: PaymentSearchCriteria): [Payment!]!
+
+    """
+    Liefert alle Zahlungen des eingeloggten Benutzers (optional gefiltert).
+    """
+    paymentsByPerson(input: PaymentSearchCriteria): [Payment!]!
+
+    """
+    Liefert eine einzelne Zahlung des eingeloggten Benutzers.
+    Z.B. für Dashboard oder Schnellansicht.
+    """
+    paymentByUser: Payment!
+}
+
+#########################
+#       MUTATIONS       #
+#########################
+
+type Mutation {
+    """
+    Erstellt eine neue Zahlung für den eingeloggten Benutzer.
+    Status wird automatisch auf PENDING gesetzt.
+    """
+    createPayment(input: CreatePaymentInput!): ID!
+
+    """
+    Aktualisiert den Zahlungsstatus (nur ADMIN).
+    """
+    updatePaymentStatus(input: UpdatePaymentStatusInput!): Payment!
+
+    """
+    Löscht eine Zahlung anhand ihrer ID (nur ADMIN).
+    """
+    deletePayment(id: ID!): Boolean!
+}

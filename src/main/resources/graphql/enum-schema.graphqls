@@ -1,0 +1,41 @@
+#########################
+#        ENUMS          #
+#########################
+
+"""
+Unterstützte Währungen im System.
+"""
+enum CurrencyType {
+    EUR     # Euro
+    USD     # US-Dollar
+    GBP     # Britisches Pfund
+    CHF     # Schweizer Franken
+    JPY     # Japanischer Yen
+    CNY     # Chinesischer Yuan
+    GHS     # Ghanaischer Cedi
+}
+
+"""
+Verfügbare Zahlungsmethoden.
+"""
+enum PaymentMethodType {
+    CREDIT_CARD
+    DEBIT_CARD
+    PAYPAL
+    APPLE_PAY
+    GOOGLE_PAY
+    BANK_TRANSFER
+    BITCOIN
+}
+
+"""
+Mögliche Zahlungsstatus.
+"""
+enum PaymentStatusType {
+    PENDING
+    PROCESSING
+    COMPLETED
+    FAILED
+    CANCELLED
+    REFUNDED
+}

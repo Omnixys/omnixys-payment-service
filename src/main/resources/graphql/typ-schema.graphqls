@@ -1,0 +1,61 @@
+#########################
+#        TYPES          #
+#########################
+
+"""
+Repräsentiert eine Zahlung im System.
+
+Eine Zahlung ist typischerweise mit einer Rechnung (invoiceId) und einem Benutzer (username) verknüpft.
+Sie enthält Informationen über Betrag, Zahlungsmethode, Status und Erstellungszeitpunkt.
+"""
+type Payment @key(fields: "id") {
+    """
+    Eindeutige ID der Zahlung.
+    """
+    id: ID!
+
+    """
+    Benutzername, der die Zahlung initiiert hat.
+    """
+    username: String!
+
+    """
+    Bankkonto mit dem bezahlt wird
+    """
+    accountId: String!
+
+    """
+    Betrag der Zahlung in der angegebenen Währung.
+    """
+    amount: Float!
+
+    """
+    Verwendete Währung der Zahlung (z.B. EUR, USD, GHS).
+    """
+    currency: CurrencyType!
+
+    """
+    Zahlungsmethode (z.B. Kreditkarte, PayPal, Banküberweisung).
+    """
+    method: PaymentMethodType!
+
+    """
+    Aktueller Zahlungsstatus (z.B. PENDING, COMPLETED).
+    """
+    status: PaymentStatusType!
+
+    """
+    Bestellnummer im zugehörigen System (optional).
+    """
+    orderNumber: String
+
+    """
+    Referenz auf zugehörige Rechnung.
+    """
+    invoiceId: ID
+
+    """
+    Zeitstempel der Erstellung dieser Zahlung.
+    """
+    created: String
+}

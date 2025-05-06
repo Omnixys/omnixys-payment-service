@@ -1,0 +1,36 @@
+#########################
+#        INPUTS         #
+#########################
+
+"""
+Eingabedaten zur Erstellung einer Zahlung.
+"""
+input CreatePaymentInput {
+    accountId: String!
+    amount: Float!
+    currency: CurrencyType!
+    method: PaymentMethodType!
+    invoiceId: ID
+    orderNumber: String
+}
+
+"""
+Eingabedaten zur Statusaktualisierung einer Zahlung.
+"""
+input UpdatePaymentStatusInput {
+    id: ID!
+    status: PaymentStatusType!
+}
+
+input PaymentSearchCriteria {
+    accountId: String
+    status: String
+    method: String
+    currency: String
+    orderNumber: String
+    amountMin: String
+    amountMax: String
+    createdFrom: String
+    createdTo: String
+}
+
