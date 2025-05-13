@@ -45,11 +45,6 @@ type Payment @key(fields: "id") {
     status: PaymentStatusType!
 
     """
-    Bestellnummer im zugehörigen System (optional).
-    """
-    orderNumber: String
-
-    """
     Referenz auf zugehörige Rechnung.
     """
     invoiceId: ID

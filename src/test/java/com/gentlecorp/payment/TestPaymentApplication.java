@@ -1,4 +1,4 @@
-package com.gentlecorp.payment;
+package com.omnixys.payment;
 
 import org.springframework.boot.SpringApplication;
 

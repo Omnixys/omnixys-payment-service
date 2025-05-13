@@ -6,8 +6,6 @@ spring:
       maximum-pool-size: 3 # Default: 10
       minimum-idle: 1 # Default: maximumPoolSize
 
-    #url: jdbc:postgresql://localhost/payment?sslmode=verify-ca&sslrootcert=C:/Zimmermann/volumes/postgres/tls/certificate.crt
-
   flyway:
     tablespace: paymentspace
     clean-disabled: false

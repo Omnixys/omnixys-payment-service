@@ -43,7 +43,7 @@ type Mutation {
     Erstellt eine neue Zahlung für den eingeloggten Benutzer.
     Status wird automatisch auf PENDING gesetzt.
     """
-    createPayment(input: CreatePaymentInput!): ID!
+    createPayment(input: CreatePaymentInput!, receiver: ID!): ID!
 
     """
     Aktualisiert den Zahlungsstatus (nur ADMIN).

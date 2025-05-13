@@ -2,7 +2,7 @@ val javaLanguageVersion = project.properties["javaLanguageVersion"] as String? ?
 val javaVersion = project.properties["javaVersion"] ?: libs.versions.javaVersion.get()
 
 val enablePreview = if (project.properties["enablePreview"] == false) null else "--enable-preview"
-val imagePath = project.properties["imagePath"] ?: "gentlecorp"
+val imagePath = project.properties["imagePath"] ?: "omnixys"
 val imageTag = project.properties["imageTag"] ?: project.version.toString()
 
 val tracePinnedThreads = project.properties["tracePinnedThreads"] == "true" || project.properties["tracePinnedThreads"] == "TRUE"
@@ -40,7 +40,7 @@ plugins {
 	id("org.asciidoctor.jvm.pdf") version libs.versions.asciidoctor.get()
 }
 
-group = "com.gentlecorp"
+group = "com.omnixys"
 version = "25.05.02"
 extra["snippetsDir"] = file("build/generated-snippets")
 

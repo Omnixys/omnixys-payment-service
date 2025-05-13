@@ -38,11 +38,9 @@ CREATE TABLE IF NOT EXISTS payment (
     currency TEXT NOT NULL,
     method TEXT NOT NULL,
     status TEXT NOT NULL,
-    order_number TEXT,
     invoice_id UUID,
     created timestamp NOT NULL
 ) TABLESPACE paymentspace;
 
 -- Indizes für gezielte Abfragen
 CREATE INDEX IF NOT EXISTS payment_invoice_id_idx ON payment(invoice_id) TABLESPACE paymentspace;
-CREATE INDEX IF NOT EXISTS payment_order_number_idx ON payment(order_number) TABLESPACE paymentspace;
