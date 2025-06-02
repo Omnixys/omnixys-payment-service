@@ -186,3 +186,6 @@ sonar-project.properties
 
 # macOS
 .DS_Store
+
+# extras
+extras/

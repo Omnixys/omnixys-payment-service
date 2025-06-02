@@ -47,12 +47,12 @@ public class KafkaConsumerService {
     )
     public void handlePersonScoped(ConsumerRecord<String, String> record) {
         final String topic = record.topic();
-        logger().info("Person-spezifisches Kommando empfangen: {}", topic);
+        logger().info("Payment-spezifisches Kommando empfangen: {}", topic);
 
         switch (topic) {
             case TOPIC_PAYMENT_SHUTDOWN_ORCHESTRATOR -> shutdown();
             case TOPIC_PAYMENT_RESTART_ORCHESTRATOR -> restart();
-            case TOPIC_PAYMENT_START_ORCHESTRATOR -> logger().info("Startsignal für Person-Service empfangen");
+            case TOPIC_PAYMENT_START_ORCHESTRATOR -> logger().info("Startsignal für Payment-Service empfangen");
         }
     }
 

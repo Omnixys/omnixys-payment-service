@@ -1,0 +1,45 @@
+name: Dependency Check
+
+on:
+  workflow_dispatch: # Ermöglicht das manuelle Auslösen
+  schedule:
+    - cron: "0 12 * * 1" # Wöchentlich jeden Montag um 12:00 Uhr UTC
+
+jobs:
+  dependency-check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [23]
+
+    steps:
+      # 1. Repository klonen
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # 2. Java installieren (entsprechend deinem Projekt)
+      - name: Setup Java ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.java-version }}
+
+      # 3. Cache für Gradle-Wrapper
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # 4. Gradle Dependencies aktualisieren prüfen
+      - name: Check for outdated dependencies
+        run: ./gradlew dependencyUpdates
+
+      # 5. Ergebnisse anzeigen
+      - name: Upload dependency report
+        uses: actions/upload-artifact@v4.6.0
+        with:
+          name: dependency-updates-report
+          path: build/dependencyUpdates/report.html

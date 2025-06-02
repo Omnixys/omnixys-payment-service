@@ -94,7 +94,7 @@ public class JwtUserDetailsService {
             // ✅ Entferne Leerzeichen und konvertiere in Uppercase
             ? roles.stream()
                 .map(role -> role.replace(" ", "_").toUpperCase()) // Ersetzt Leerzeichen mit Unterstrichen
-                .filter(role -> isValidRole(role)) // Überprüft, ob die Rolle existiert
+                .filter(this::isValidRole) // Überprüft, ob die Rolle existiert
                 .toList()
             : new ArrayList<>();
     }

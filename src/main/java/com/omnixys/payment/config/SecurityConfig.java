@@ -49,9 +49,7 @@ sealed interface SecurityConfig permits ApplicationConfig {
 
               .anyRequest().authenticated();
         })
-        //.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
         .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(converter)))
-        // Spring Security does not create or use HttpSession for SecurityContext
         .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
         .formLogin(AbstractHttpConfigurer::disable)
         .csrf(AbstractHttpConfigurer::disable)

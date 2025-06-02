@@ -90,9 +90,9 @@ public class KafkaPublisherService {
     }
 
     /**
-     * Versendet ein Kafka-Event zur Bestätigungsmail beim Erstellen einer Person.
+     * Versendet ein Kafka-Event zur Bestätigungsmail beim Erstellen einer Bezahlung.
      *
-     * @param payment die erstellte Person
+     * @param payment die erstellte Bezahlung
      * @param role   die zugewiesene Rolle
      */
     @Observed(name = "kafka-publisher.send-mail")
