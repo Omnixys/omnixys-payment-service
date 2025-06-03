@@ -53,20 +53,20 @@ jobs:
   build:
     name: 🔨 Build & Test
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_DB: ${{ env.POSTGRES_SQL_TEST_DB }}
-          POSTGRES_USER: ${{ env.POSTGRES_SQL_TEST_USERNAME }}
-          POSTGRES_PASSWORD: ${{ env.POSTGRES_SQL_TEST_PASSWORD }}
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+    # services:
+    #   postgres:
+    #     image: postgres:15
+    #     env:
+    #       POSTGRES_DB: ${{ env.POSTGRES_SQL_TEST_DB }}
+    #       POSTGRES_USER: ${{ env.POSTGRES_SQL_TEST_USERNAME }}
+    #       POSTGRES_PASSWORD: ${{ env.POSTGRES_SQL_TEST_PASSWORD }}
+    #     ports:
+    #       - 5432:5432
+    #     options: >-
+    #       --health-cmd="pg_isready"
+    #       --health-interval=10s
+    #       --health-timeout=5s
+    #       --health-retries=5
     outputs:
       CURRENT_DATE: ${{ steps.set_date.outputs.CURRENT_DATE }}
     strategy:
