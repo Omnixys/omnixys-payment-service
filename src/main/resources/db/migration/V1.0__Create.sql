@@ -1,3 +1,5 @@
+
+
 -- Enum-Typ für Zahlungsstatus
 CREATE TYPE PAYMENTSTATUS AS ENUM (
     'PENDING',
@@ -6,7 +8,7 @@ CREATE TYPE PAYMENTSTATUS AS ENUM (
     'FAILED',
     'CANCELLED',
     'REFUNDED'
-);
+    );
 
 -- Enum-Typen für Währung und Zahlungsmethode
 CREATE TYPE CURRENCYTYPE AS ENUM (
@@ -17,7 +19,7 @@ CREATE TYPE CURRENCYTYPE AS ENUM (
     'JPY',
     'CNY',
     'GHS'
-);
+    );
 
 CREATE TYPE PAYMENTMETHOD AS ENUM (
     'CREDIT_CARD',
@@ -27,20 +29,20 @@ CREATE TYPE PAYMENTMETHOD AS ENUM (
     'GOOGLE_PAY',
     'BANK_TRANSFER',
     'BITCOIN'
-);
+    );
 
--- Zahlungstabelle OHNE TABLESPACE (Flyway-safe)
+-- Tabelle zur Speicherung von Zahlungen
 CREATE TABLE IF NOT EXISTS payment (
-                                       id UUID PRIMARY KEY,
-                                       username TEXT NOT NULL,
-                                       account_id UUID NOT NULL,
-                                       amount DECIMAL(8,2) NOT NULL CHECK (amount > 0),
-                                       currency TEXT NOT NULL,
-                                       method TEXT NOT NULL,
-                                       status TEXT NOT NULL,
-                                       invoice_id UUID,
-                                       created TIMESTAMP NOT NULL
+    id UUID PRIMARY KEY USING INDEX TABLESPACE paymentspace,
+    username TEXT NOT NULL,
+    account_id UUID NOT NULL,
+    amount DECIMAL(8,2) NOT NULL CHECK (amount > 0),
+    currency TEXT NOT NULL,
+    method TEXT NOT NULL,
+    status TEXT NOT NULL,
+    invoice_id UUID,
+    created timestamp NOT NULL
 );
 
--- Index auf invoice_id ohne Tablespace
+-- Indizes für gezielte Abfragen
 CREATE INDEX IF NOT EXISTS payment_invoice_id_idx ON payment(invoice_id);
