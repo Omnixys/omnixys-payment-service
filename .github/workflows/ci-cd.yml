@@ -19,6 +19,8 @@ env:
   POSTGRES_SQL_USERNAME: ${{ secrets.POSTGRES_SQL_USERNAME }}
   POSTGRES_SQL_PASSWORD: ${{ secrets.POSTGRES_SQL_PASSWORD }}
   POSTGRES_SQL_TEST_DB: ${{ secrets.POSTGRES_SQL_TEST_DB }}
+  POSTGRES_SQL_TEST_USERNAME: ${{ secrets.POSTGRES_SQL_TEST_USERNAME }}
+  POSTGRES_SQL_TEST_PASSWORD: ${{ secrets.POSTGRES_SQL_TEST_PASSWORD }}
 
   SERVER_PORT: ${{ secrets.SERVER_PORT }}
   TEST_SERVER_PORT: ${{ secrets.TEST_SERVER_PORT }}
@@ -51,6 +53,20 @@ jobs:
   build:
     name: 🔨 Build & Test
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: ${{ env.POSTGRES_SQL_TEST_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_SQL_TEST_USERNAME }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_SQL_TEST_PASSWORD }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     outputs:
       CURRENT_DATE: ${{ steps.set_date.outputs.CURRENT_DATE }}
     strategy:
@@ -74,6 +90,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java-version }}
+      
+      - name: Wait for PostgreSQL
+        run: |
+            echo "Warte auf PostgreSQL..."
+            until pg_isready -h localhost -p 5432 -U ${{ secrets.POSTGRES_SQL_TEST_USERNAME }}; do
+              sleep 2
+            done
+        
 
       - name: Grant execute permissions for Gradle
         run: chmod +x ./gradlew
