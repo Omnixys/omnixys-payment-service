@@ -17,7 +17,8 @@ jobs:
         run: |
           curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v11.1.0/dependency-check-11.1.0-release.zip -o dc.zip
           unzip dc.zip -d dc
-          chmod +x dc/bin/dependency-check.sh
+#          chmod +x dc/bin/dependency-check.sh
+          chmod +x dc/dependency-check/bin/dependency-check.sh
 
       - name: Run OWASP Dependency Check
         run: |
