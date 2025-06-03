@@ -90,14 +90,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java-version }}
-      
-      - name: Wait for PostgreSQL
-        run: |
-            echo "Warte auf PostgreSQL..."
-            until pg_isready -h localhost -p 5432 -U ${{ secrets.POSTGRES_SQL_TEST_USERNAME }}; do
-              sleep 2
-            done
-        
 
       - name: Grant execute permissions for Gradle
         run: chmod +x ./gradlew
