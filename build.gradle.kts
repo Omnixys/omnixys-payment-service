@@ -98,6 +98,7 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:kafka")
 	testImplementation("org.testcontainers:mysql")
+	testImplementation("org.testcontainers:postgresql")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.springframework:spring-webflux")
 
@@ -131,7 +132,6 @@ dependencies {
 	 * MESSANGER
 	 * --------------------------------------------------------------------------------------------------------------------*/
 	implementation("org.springframework.kafka:spring-kafka")
-
 	implementation("com.fasterxml.jackson.core:jackson-databind")
 	implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
 
