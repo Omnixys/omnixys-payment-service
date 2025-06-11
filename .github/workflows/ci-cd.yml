@@ -53,25 +53,11 @@ jobs:
   build:
     name: 🔨 Build & Test
     runs-on: ubuntu-latest
-    # services:
-    #   postgres:
-    #     image: postgres:15
-    #     env:
-    #       POSTGRES_DB: ${{ env.POSTGRES_SQL_TEST_DB }}
-    #       POSTGRES_USER: ${{ env.POSTGRES_SQL_TEST_USERNAME }}
-    #       POSTGRES_PASSWORD: ${{ env.POSTGRES_SQL_TEST_PASSWORD }}
-    #     ports:
-    #       - 5432:5432
-    #     options: >-
-    #       --health-cmd="pg_isready"
-    #       --health-interval=10s
-    #       --health-timeout=5s
-    #       --health-retries=5
     outputs:
       CURRENT_DATE: ${{ steps.set_date.outputs.CURRENT_DATE }}
     strategy:
       matrix:
-        java-version: [23]
+        java-version: [24]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -118,7 +104,7 @@ jobs:
           -d '{"value": "${{ steps.set_date.outputs.CURRENT_DATE }}"}'
 
       - name: Build with Gradle
-        run: ./gradlew build --info
+        run: ./gradlew build
 
       - name: Upload Build Artifact (JAR)
         uses: actions/upload-artifact@v4
@@ -132,7 +118,7 @@ jobs:
     needs: build
     strategy:
       matrix:
-        java-version: [23]
+        java-version: [24]
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4

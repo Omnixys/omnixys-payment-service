@@ -1,5 +1,3 @@
-
-
 -- Enum-Typ für Zahlungsstatus
 CREATE TYPE PAYMENTSTATUS AS ENUM (
     'PENDING',
@@ -33,7 +31,7 @@ CREATE TYPE PAYMENTMETHOD AS ENUM (
 
 -- Tabelle zur Speicherung von Zahlungen
 CREATE TABLE IF NOT EXISTS payment (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY USING INDEX TABLESPACE paymentspace,
     username TEXT NOT NULL,
     account_id UUID NOT NULL,
     amount DECIMAL(8,2) NOT NULL CHECK (amount > 0),
@@ -42,7 +40,7 @@ CREATE TABLE IF NOT EXISTS payment (
     status TEXT NOT NULL,
     invoice_id UUID,
     created timestamp NOT NULL
-);
+) TABLESPACE paymentspace;
 
 -- Indizes für gezielte Abfragen
-CREATE INDEX IF NOT EXISTS payment_invoice_id_idx ON payment(invoice_id);
+CREATE INDEX IF NOT EXISTS payment_invoice_id_idx ON payment(invoice_id) TABLESPACE paymentspace;
