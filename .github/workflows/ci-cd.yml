@@ -25,14 +25,8 @@ env:
   SERVER_PORT: ${{ secrets.SERVER_PORT }}
   TEST_SERVER_PORT: ${{ secrets.TEST_SERVER_PORT }}
 
-
   ACTIVE_PROFILE: ${{ secrets.ACTIVE_PROFILE }}
   HTTPS: ${{ secrets.HTTPS }}
-
-  MONGODB_URI: ${{ secrets.MONGODB_URI }}
-  MONGODB_USER_NAME: ${{ secrets.MONGODB_USER_NAME }}
-  MONGODB_USER_PASSWORT: ${{ secrets.MONGODB_USER_PASSWORT }}
-  TEST_MONGODB_DATABASE: ${{ secrets.TEST_MONGODB_DATABASE }}
 
   NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
   SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -104,7 +98,7 @@ jobs:
           -d '{"value": "${{ steps.set_date.outputs.CURRENT_DATE }}"}'
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew build  --stacktrace
 
       - name: Upload Build Artifact (JAR)
         uses: actions/upload-artifact@v4
