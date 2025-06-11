@@ -12,14 +12,14 @@ public final class Banner {
 
   private static final Figlets figlets = new Figlets();
   private static final String FIGLET = figlets.randomFigletGenerator();
-  private static final String SERVICE_HOST = System.getenv("ACCOUNT_SERVICE_HOST");
+  private static final String SERVICE_HOST = System.getenv("PAYMENT_SERVICE_HOST");
   private static final String KUBERNETES = SERVICE_HOST == null
     ? "N/A"
-    : String.format("ACCOUNT_SERVICE_HOST=%s, ACCOUNT_SERVICE_PORT=%s", SERVICE_HOST, System.getenv("ACCOUNT_SERVICE_PORT"));
+    : String.format("PAYMENT_SERVICE_HOST=%s, PAYMENT_SERVICE_PORT=%s", SERVICE_HOST, System.getenv("PAYMENT_SERVICE_PORT"));
 
   public static final String TEXT = String.format("""
         %s
-        (C) Caleb Gyamfi, Gentle Corp
+        (C) Caleb Gyamfi, Omnixys
         Version             2024.08.30
         Spring Boot         %s
         Spring Security     %s

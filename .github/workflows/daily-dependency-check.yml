@@ -15,20 +15,22 @@ jobs:
 
       - name: Install OWASP Dependency-Check
         run: |
-          curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v11.1.0/dependency-check-11.1.0-release.zip -o dc.zip
-          unzip dc.zip -d dc
-          chmod +x dc/dependency-check/bin/dependency-check.sh
-
+            curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v12.1.0/dependency-check-12.1.0-release.zip -o dependency-check-12.1.0-release.zip
+            unzip dependency-check-12.1.0-release.zip -d dependency-check
+            chmod +x dependency-check/dependency-check
+      
       - name: Run OWASP Dependency Check
         run: |
-          ./dc/bin/dependency-check.sh \
+          dependency-check/dependency-check/bin/dependency-check.sh \
             --project "Omnixys Payment Service" \
             --scan . \
             --nvdApiKey ${{ secrets.NVD_API_KEY }} \
             --format "HTML" \
-            --out ./dependency-check-report
+            --out dependency-check-report
+        continue-on-error: true
 
       - name: Upload Report as Artifact
+        if: always() 
         uses: actions/upload-artifact@v4
         with:
           name: owasp-dependency-check-report
