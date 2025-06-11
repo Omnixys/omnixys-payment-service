@@ -9,6 +9,7 @@ spring:
   flyway:
     # tablespace: paymentspace
     clean-disabled: false
+    locations: classpath:db/migration/dev
 
   devtools:
     livereload:
