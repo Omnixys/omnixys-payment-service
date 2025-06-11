@@ -70,10 +70,10 @@ spring:
     username: ${app.postgres.username}
     password: ${app.postgres.password}
 
-  flyway:
-    #    locations: classpath:db/migration/{vendor}
-    locations: classpath:db/migration
-    create-schemas: false
+  # flyway:
+  #   #    locations: classpath:db/migration/{vendor}
+  #   locations: classpath:db/migration
+  #   create-schemas: false
 
   jpa:
     hibernate:
