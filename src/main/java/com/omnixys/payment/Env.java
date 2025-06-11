@@ -1,17 +1,15 @@
 package com.omnixys.payment;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvException;
 
 public class Env {
     static {
-        Dotenv dotenv = Dotenv.configure().load();
-        dotenv.entries().forEach(entry ->
-            {
-//                System.out.println("Key=" + entry.getKey() + " Value=" + entry.getValue());
-                System.setProperty(
-                    entry.getKey(), entry.getValue()
-                );
-            }
-        );
+        try {
+            Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
+            dotenv.entries().forEach(entry -> System.setProperty(entry.getKey(), entry.getValue()));
+        } catch (DotenvException e) {
+            System.err.println("WARN: .env file not found or invalid.");
+        }
     }
 }
