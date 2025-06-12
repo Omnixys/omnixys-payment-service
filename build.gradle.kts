@@ -39,7 +39,7 @@ plugins {
 	id("org.asciidoctor.jvm.convert") version libs.versions.asciidoctor.get()
 	id("org.asciidoctor.jvm.pdf") version libs.versions.asciidoctor.get()
 
-	id 'org.cyclonedx.bom' version '1.8.1'
+	id("org.cyclonedx.bom") version "1.8.1"
 }
 
 group = "com.omnixys"
@@ -277,4 +277,12 @@ idea {
 		sourceDirs.add(file("generated/"))
 		generatedSourceDirs.add(file("generated/"))
 	}
+}
+
+// ✅ CycloneDX-Konfiguration
+cyclonedxBom {
+    includeBomSerialNumber.set(true)
+    outputFormat.set("json")           // Alternativ: "xml"
+    schemaVersion.set("1.5")           // Oder 1.4, 1.3, etc.
+    destination.set(file("build/reports/sbom")) // Zielpfad für SBOM-Datei
 }
