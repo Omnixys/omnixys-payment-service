@@ -1,3 +1,5 @@
+import org.cyclonedx.gradle.CycloneDxTask
+
 val javaLanguageVersion = project.properties["javaLanguageVersion"] as String? ?: JavaVersion.VERSION_24.majorVersion
 val javaVersion = project.properties["javaVersion"] ?: libs.versions.javaVersion.get()
 
@@ -279,10 +281,10 @@ idea {
 	}
 }
 
-// ✅ CycloneDX-Konfiguration
-cyclonedxBom {
+
+tasks.named<CycloneDxTask>("cyclonedxBom") {
     includeBomSerialNumber.set(true)
-    outputFormat.set("json")           // Alternativ: "xml"
-    schemaVersion.set("1.5")           // Oder 1.4, 1.3, etc.
-    destination.set(file("build/reports/sbom")) // Zielpfad für SBOM-Datei
+    outputFormat.set("json")
+    schemaVersion.set("1.5")
+    destination.set(file("build/reports/sbom"))
 }
