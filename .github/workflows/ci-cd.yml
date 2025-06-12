@@ -232,19 +232,19 @@ jobs:
           cosign sign --yes ${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}
           cosign sign --yes ${{ env.IMAGE_NAME }}:latest
 
-      - name: Generate CycloneDX SBOM for Java (Gradle)
-        run: ./gradlew cyclonedxBom
+      # - name: Generate CycloneDX SBOM for Java (Gradle)
+      #   run: ./gradlew cyclonedxBom
 
-      - name: Cosign SBOM Attestation
-        run: |
-          cosign attest \
-            --predicate build/reports/bom.json \
-            --type cyclonedx \
-            --key github \
-            ${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}
+      # - name: Cosign SBOM Attestation
+      #   run: |
+      #     cosign attest \
+      #       --predicate build/reports/bom.json \
+      #       --type cyclonedx \
+      #       --key github \
+      #       ${{ env.IMAGE_NAME }}:${{ env.CURRENT_DATE }}
 
-      - name: Upload SBOM (CycloneDX)
-        uses: actions/upload-artifact@v4
-        with:
-          name: sbom-cyclonedx
-          path: build/reports/bom.json # oder .xml
+      # - name: Upload SBOM (CycloneDX)
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: sbom-cyclonedx
+      #     path: build/reports/bom.json # oder .xml
