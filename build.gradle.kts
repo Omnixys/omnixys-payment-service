@@ -281,10 +281,16 @@ idea {
 	}
 }
 
-
-tasks.named<CycloneDxTask>("cyclonedxBom") {
+tasks.register<CycloneDxTask>("cyclonedxBomXml") {
+    outputFormat.set("xml")
+    schemaVersion.set("1.5")
     includeBomSerialNumber.set(true)
+    destination.set(file("build/reports/sbom/xml"))
+}
+
+tasks.register<CycloneDxTask>("cyclonedxBomJson") {
     outputFormat.set("json")
     schemaVersion.set("1.5")
-    destination.set(file("build/reports/sbom"))
+    includeBomSerialNumber.set(true)
+    destination.set(file("build/reports/sbom/json"))
 }
