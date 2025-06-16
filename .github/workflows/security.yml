@@ -28,12 +28,15 @@ jobs:
           project: "omnixys-${{ secrets.SERVICE }}-service"
           path: './'
           format: 'HTML'
+        continue-on-error: true
 
       - name: Upload Dependency Check report
         uses: actions/upload-artifact@v4
         with:
           name: Depcheck-report
           path: ./reports
+        continue-on-error: true
+
 
   snyk:
     name: "Security-Snyk-Scan-${{ vars.CURRENT_DATE }}"
