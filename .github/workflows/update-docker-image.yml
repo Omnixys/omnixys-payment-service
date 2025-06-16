@@ -9,7 +9,7 @@ permissions:
 
 env:
   COSIGN_EXPERIMENTAL: "true"
-  IMAGE_NAME: ${{ secrets.DOCKER_USER }}/${{ secrets.SERVICE }}
+  IMAGE_NAME: ${{ secrets.DOCKER_USER }}/${{ secrets.SERVICE }}-service
 
   POSTGRES_SQL_HOST: ${{ secrets.POSTGRES_SQL_HOST }}
   POSTGRES_SQL_PORT: ${{ secrets.POSTGRES_SQL_PORT }}
