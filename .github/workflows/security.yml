@@ -1,4 +1,5 @@
-name: Security - Omnixys Payment Service
+name: Security
+  # CURRENT_DATE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.date || format('{0,date,yyyy-MM-dd}', github.run_started_at) }}
 
 on:
   schedule:
@@ -11,7 +12,7 @@ permissions:
   # actions: read
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKER_USER }}/${{ secrets.SERVICE }}
+  IMAGE_NAME: ${{ secrets.DOCKER_USER }}/${{ secrets.SERVICE }}-service
 
 jobs:
   dependency-check:
@@ -24,7 +25,7 @@ jobs:
       - name: Run OWASP Dependency Check
         uses: dependency-check/Dependency-Check_Action@75ba02d6183445fe0761d26e836bde58b1560600
         with:
-          project: "Omnixys Payment Service"
+          project: "omnixys-${{ secrets.SERVICE }}-service"
           path: './'
           format: 'HTML'
 
@@ -36,17 +37,20 @@ jobs:
 
   snyk:
     name: "Security-Snyk-Scan-${{ vars.CURRENT_DATE }}"
+    strategy:
+      matrix:
+        java-version: [24]
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Java 24
+      - name: Set up Java ${{ matrix.java-version }}
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '24'
+          java-version: ${{ matrix.java-version }}
 
       - name: Set up Snyk CLI
         uses: snyk/actions/setup@cdb760004ba9ea4d525f2e043745dfe85bb9077e
@@ -119,6 +123,7 @@ jobs:
         with:
           command: quickview
           image: "${{ env.IMAGE_NAME }}:latest"
+
 
       - name: Docker Scout CVEs
         id: docker-scout-cves

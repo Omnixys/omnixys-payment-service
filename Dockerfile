@@ -1,8 +1,6 @@
 # syntax=docker/dockerfile:1.14.0
 
 ARG JAVA_VERSION=24
-ARG APP_NAME=payment
-ARG APP_VERSION=2025.05.16
 
 # ---------------------------------------------------------------------------------------
 # Stage 1: builder (Gradle Build)
@@ -11,6 +9,7 @@ FROM azul/zulu-openjdk:${JAVA_VERSION} AS builder
 
 ARG APP_NAME
 ARG APP_VERSION
+
 WORKDIR /source
 
 # Kopiere Gradle-Dateien
@@ -24,7 +23,6 @@ RUN JAR_FILE=$(ls ./build/libs/*.jar | grep -v plain | head -n 1) && \
     echo "Using JAR: $JAR_FILE" && \
     java -Djarmode=layertools -jar "$JAR_FILE" extract
 
-
 # ---------------------------------------------------------------------------------------
 # Stage 2: final (Produktions-Image mit JRE)
 # ---------------------------------------------------------------------------------------
@@ -32,13 +30,22 @@ FROM azul/zulu-openjdk:${JAVA_VERSION}-jre AS final
 
 ARG APP_NAME
 ARG APP_VERSION
-LABEL org.opencontainers.image.title="${APP_NAME}" \
-      org.opencontainers.image.description="Microservice ${APP_NAME} v1 mit Basis-Image Azul Zulu und Ubuntu Jammy" \
+ARG CREATED
+ARG REVISION
+ARG JAVA_VERSION
+
+LABEL org.opencontainers.image.title="${APP_NAME}-service" \
+      org.opencontainers.image.description="Omnixys ${APP_NAME}-service – Java ${JAVA_VERSION}, built with Gradle, Version ${APP_VERSION}, basiert auf Azul Zulu & Ubuntu Jammy." \
       org.opencontainers.image.version="${APP_VERSION}" \
       org.opencontainers.image.licenses="GPL-3.0-or-later" \
-      org.opencontainers.image.vendor="Omnixys" \
+      org.opencontainers.image.vendor="omnixys" \
       org.opencontainers.image.authors="caleb.gyamfi@omnixys.com" \
-      org.opencontainers.image.base.name="azul/zulu-openjdk:LATEST_VERSION-jre"
+      org.opencontainers.image.base.name="azul/zulu-openjdk:${JAVA_VERSION}-jre" \
+      org.opencontainers.image.url="https://github.com/omnixys/omnixys-${APP_NAME}-service" \
+      org.opencontainers.image.source="https://github.com/omnixys/omnixys-${APP_NAME}-service" \
+      org.opencontainers.image.created="${CREATED}" \
+      org.opencontainers.image.revision="${REVISION}" \
+      org.opencontainers.image.documentation="https://github.com/omnixys/omnixys-${APP_NAME}-service/blob/main/README.md"
 
 WORKDIR /workspace
 
